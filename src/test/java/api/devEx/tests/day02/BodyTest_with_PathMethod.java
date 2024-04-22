@@ -1,12 +1,9 @@
 package api.devEx.tests.day02;
-
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class BodyTest_with_PathMethod {
     String devExURL="http://www.eurotech.study";
