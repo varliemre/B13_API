@@ -90,15 +90,38 @@ public class DevEx_with_jsonPath {
         List<String> secondUserSkills = jsonPath.getList("skills[1]");// object in value si ne ise get i o sekilde cagir...
         System.out.println("secondUserSkills = " + secondUserSkills);
 
+
         System.out.println("*******************GPAT METHOD**********************\n");
         //get the names who have id less than 10
         List<String> lessThan10Names = jsonPath.getList("findAll{it.id<10}.user.name");   // it = if anlaminda
         System.out.println("lessThan10Names = " + lessThan10Names);
 
+        System.out.println("*******************GPAT METHOD**********************\n");
         // get IDa who have location info as
         List<String> locationLondon = jsonPath.getList("findAll{it.location=='London'}.id");
         System.out.println("locationLondon = " + locationLondon);
         System.out.println("locationLondon.size() = " + locationLondon.size());
+
+        System.out.println("*******************GPAT METHOD**********************\n");
+        //get all names who has status as Junior developer
+        List<String> status = jsonPath.getList("findAll{it.status=='Junior Developer'}.user.name");
+        System.out.println("status = " + status);
+        System.out.println("status.size() = " + status.size());
+
+        System.out.println("*******************GPAT METHOD**********************\n");
+        //get all profiles student or learning
+        List<Object> statusListStudent = jsonPath.getList("findAll{it.status=='Student or Learning'}");
+        System.out.println("statusListStudent.size() = " + statusListStudent.size());
+        for (Object st : statusListStudent) {
+            System.out.println("st = " + st);
+        }
+
+        System.out.println("*******************GPAT METHOD**********************\n");
+        //get all skills contain selenium
+        List<Object> skills = jsonPath.getList("findAll{it.skills.contains('Selenium')}");
+        System.out.println("skills.size() = " + skills.size());
+        System.out.println("skills = " + skills);
+
 
     }
 }
