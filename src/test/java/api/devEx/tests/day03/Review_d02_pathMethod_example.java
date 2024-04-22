@@ -102,5 +102,15 @@ public class Review_d02_pathMethod_example {
         //get all user IDs and how many
         List<Integer> allUserID = response.path("user.id");   //index vermedigim icin user.id hepsini getirdi...
         System.out.println("allUserID = " + allUserID);
+        System.out.println("allUserID.size() = " + allUserID.size());
+        System.out.println("**********************************************\n");
+
+        //get all IDs
+        List<Integer> allIDs = response.path("id");
+        System.out.println("allIDs = " + allIDs);
+        System.out.println("allIDs.size() = " + allIDs.size());
+        for (Integer id : allIDs) {
+            System.out.println("id = " + id);
+        }
     }
 }
