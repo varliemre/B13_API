@@ -1,4 +1,4 @@
-package api.devEx.tests.day02;
+package api.devEx.tests.day03;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Review_day01_example {
+public class Review_day02_example {
 
     String bookCartURL="https://bookcart.azurewebsites.net";
     String bookStoreURL="https://bookstore.toolsqa.com";

@@ -1,4 +1,4 @@
-package api.devEx.tests.day01;
+package api.devEx.tests.day02;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

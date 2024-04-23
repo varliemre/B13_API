@@ -1,4 +1,4 @@
-package api.devEx.tests.day03;
+package api.devEx.tests.day04;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;

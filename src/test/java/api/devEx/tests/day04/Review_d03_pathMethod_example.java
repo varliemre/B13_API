@@ -1,4 +1,4 @@
-package api.devEx.tests.day03;
+package api.devEx.tests.day04;
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 import io.restassured.http.ContentType;
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
-public class Review_d02_pathMethod_example {
+public class Review_d03_pathMethod_example {
 
     String bookStoreURL = "https://bookstore.toolsqa.com";
     String devExURL="http://www.eurotech.study";
