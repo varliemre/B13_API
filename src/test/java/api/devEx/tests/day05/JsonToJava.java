@@ -5,10 +5,12 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.SimpleTimeZone;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static org.testng.Assert.assertEquals;
 
 public class JsonToJava {
@@ -46,6 +48,80 @@ public class JsonToJava {
         Object actualEmail=  jsonDataMap.get("email");
         assertEquals(actualEmail,"eurotech@gmail.com");
     }
+    @Test
+    public void t27_dx_retrieveAllProfile_jsonDataList() {
+        Response response = given().accept(ContentType.JSON)
+                .when()
+                .get("/api/profile");
+        assertEquals(response.statusCode(),200);
+        List <Map<String,Object>> allBody  = response.body().as(List.class);
+        //System.out.println("allBody = " + allBody);
 
+        //print and verify third company is Siemens
+        String expectedCompany="Siemens";
+        String actualCompany= (String) allBody.get(2).get("company");
+        assertEquals(actualCompany,expectedCompany);
 
+        System.out.println("*********************\n");
+        // get third users body
+        Map<String,Object> thirdUser=allBody.get(2);//we got all information related to third user
+        System.out.println("thirdUser = " + thirdUser);
+        System.out.println("*********************\n");
+        // get user body information of third users
+        Map< String,Object> userInfo = (Map<String, Object>) thirdUser.get("user");
+        String name= (String) userInfo.get("name");
+        System.out.println("name = " + name);
+
+        String email= (String) userInfo.get("email");
+        System.out.println("email = " + email);
+        assertEquals(email,"gokhanyildirim@gmail.com");
+
+        List<String> skills= (List<String>) thirdUser.get("skills");
+        System.out.println("skills = " + skills);
+
+        /*  HW
+         * everyone find their user
+         * verify id, name, email
+         * skills
+
+         */
+    }
+
+    @Test
+    public void t28_dx_retrieveAllProfile_sixthUser() {
+
+           /*
+                 /api/profile end point
+                 print sixth user's skills and verify that
+                 "Java",
+                 "TestNG",
+                 "Cucumber"
+                 and verify that experience title and company
+                 "Tester" "Amazon"
+            */
+        Response response = get("api/profile"); // short way
+        assertEquals(response.statusCode(),200);
+
+        List<Map<String,Object>> allBody=response.body().as(List.class);
+        Map<String, Object> sixthUser = allBody.get(5);
+        System.out.println("sixthUser = " + sixthUser);
+
+        List<String> actualSkills = (List<String>) sixthUser.get("skills");
+        System.out.println("actualSkills = " + actualSkills);
+
+        List<String> expectedSkills=new ArrayList<>();
+        expectedSkills.add("Java");
+        expectedSkills.add("TestNG");
+        expectedSkills.add("Cucumber");
+
+        System.out.println("expectedSkills = " + expectedSkills);
+
+        assertEquals(actualSkills,expectedSkills);
+        /** HW Task
+         * and verify that experience title and company
+         *             "Tester" Amazon
+         *
+         */
+
+    }
 }
