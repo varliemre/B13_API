@@ -122,4 +122,49 @@ public class DevExTest_with_HamcrestMatchers {
 
         /*David, Steven Clark, Musa, Rod, Ismet, hans, Mable5*/
     }
+
+    @Test
+    public void t24_dx_retrieveAllProfile_HamcrestBody_hasItems() {
+
+        /*David, Steven Clark, Musa, Rod, Ismet, hans, Mable5*/
+        given().accept(ContentType.JSON)
+                .when()
+                .get("/api/profile")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .assertThat()
+                .contentType("application/json; charset=utf-8")
+                .and()
+                .body("user.name",hasItems("David", "Steven Clark", "Musa", "Rod", "Ismet", "hans", "Mable5"));
+    }
+
+    @Test
+    public void t25_dx_retrieveAllProfile_HamcrestBody() {
+        /*
+                1- verify that 2. company is "Eurotech"
+                2- verify that 2. skills's fifth skill is "API"
+                3- verify that 11. website is "thelipagus.com"
+                4- verify that 11. email is "Maida48@yahoo.com"
+                5- verify that 6. experience's title is "Tester"
+*/
+        given().accept(ContentType.JSON)
+                .when()
+                .get("/api/profile")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .assertThat()
+                .contentType("application/json; charset=utf-8")
+                .and()
+                .body("company[1]",equalTo("Eurotech"),
+                        "skills[1][4]",equalTo("API"),
+                        "website[10]",equalTo("thelipagus.com"),
+                        "user[10].email",equalTo("Maida48@yahoo.com"),
+                        "experience[5].title[0]",equalTo("Tester")
+
+                        );
+    }
 }
