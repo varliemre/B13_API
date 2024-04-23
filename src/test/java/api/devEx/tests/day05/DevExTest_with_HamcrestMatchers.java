@@ -6,8 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 public class DevExTest_with_HamcrestMatchers {
 
@@ -101,6 +100,26 @@ public class DevExTest_with_HamcrestMatchers {
                     )
 
                 .log().all();
+    }
 
+    @Test
+    public void t23_dx_retrieveAllProfile_HamcrestBody_hasItem() {
+        /*
+        apitesting333@gmail.com*/
+
+        given().accept(ContentType.JSON)
+                .when()
+                .get("/api/profile")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .assertThat()
+                .contentType("application/json; charset=utf-8")
+                .and()
+                .body("user.email", hasItem("apitesting333@gmail.com"))
+                .log().all();
+
+        /*David, Steven Clark, Musa, Rod, Ismet, hans, Mable5*/
     }
 }
