@@ -5,13 +5,11 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SimpleTimeZone;
+import java.util.*;
 
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.assertEquals;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class JsonToJava {
     @BeforeClass
@@ -61,12 +59,13 @@ public class JsonToJava {
         String expectedCompany="Siemens";
         String actualCompany= (String) allBody.get(2).get("company");
         assertEquals(actualCompany,expectedCompany);
-
         System.out.println("*********************\n");
+
         // get third users body
         Map<String,Object> thirdUser=allBody.get(2);//we got all information related to third user
         System.out.println("thirdUser = " + thirdUser);
         System.out.println("*********************\n");
+
         // get user body information of third users
         Map< String,Object> userInfo = (Map<String, Object>) thirdUser.get("user");
         String name= (String) userInfo.get("name");
@@ -79,12 +78,58 @@ public class JsonToJava {
         List<String> skills= (List<String>) thirdUser.get("skills");
         System.out.println("skills = " + skills);
 
-        /*  HW
-         * everyone find their user
-         * verify id, name, email
-         * skills
+    }
 
-         */
+            /*  HW
+             * everyone find their user
+             * verify id, name, email
+             * skills
+             */
+
+    @Test
+    public void HW1() {
+        Response response = given().accept(ContentType.JSON)
+                .when()
+                .get("/api/profile");
+        assertEquals(response.statusCode(),200);
+
+        List <Map<String,Object>> allBody  = response.body().as(List.class);
+        //System.out.println("allBody = " + allBody);
+
+
+        //Verify that ID=963
+        int expectedID = 963;
+        int actualID = ((Number) allBody.get(827).get("id")).intValue();
+        System.out.println("actualID = " + actualID);
+        assertEquals(actualID,expectedID);
+
+        Map<String,Object> User827=allBody.get(827);
+        System.out.println("User827 = " + User827);
+
+        Map< String,Object> userInfo = (Map<String, Object>) User827.get("user");
+        String name= (String) userInfo.get("name");
+        System.out.println("name = " + name);
+
+        //Verify that name=Emre
+        String expectedName="Emre";
+        String actualName= (String) userInfo.get("name");
+        System.out.println("actualName = " + actualName);
+        assertEquals(actualName,expectedName);
+
+        //Verify that email=emretest@gmail.com
+        String expectedEmail = "emretest@gmail.com";
+        String actualEmail= (String) userInfo.get("email");
+        System.out.println("actualEmail = " + actualEmail);
+        System.out.println("email = " + actualEmail);
+        assertEquals(actualEmail,expectedEmail);
+
+        // Verify that skills [Java, Selenium, Cucumber, Cypress, Python]
+        List<String> expectedSkills = Arrays.asList("Java", "Selenium", "Cucumber", "Cypress", "Python");
+        List<String> actualSkills = (List<String>) User827.get("skills");
+        System.out.println("actualSkills = " + actualSkills);
+        assertArrayEquals(expectedSkills.toArray(), actualSkills.toArray());
+
+
     }
 
     @Test
@@ -122,6 +167,20 @@ public class JsonToJava {
          *             "Tester" Amazon
          *
          */
+
+        List<Map<String,Object>> experience= (List<Map<String, Object>>) sixthUser.get("experience");
+        System.out.println("experience = " + experience);
+        // 2. way =>  allBody.get(5) = sixthUser
+        List<Map<String,Object>> experience1= (List<Map<String, Object>>) allBody.get(5).get("experience");
+        System.out.println("experience1 = " + experience1);
+
+        Map<String,Object> firstExperience=experience.get(0);
+        System.out.println("firstExperience.get(\"title\") = " + firstExperience.get("title"));
+        assertEquals(firstExperience.get("title"),"Tester");
+        System.out.println("firstExperience.get(\"company\") = " + firstExperience.get("company"));
+        assertEquals(firstExperience.get("company"),"Amazon");
+
+
 
     }
 }
