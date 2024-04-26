@@ -112,4 +112,21 @@ public class PostRequestDemo {
 
     }
 
+    @Test
+    public void t36_dx_registerUser_POST_newUserInfo_2() {
+        NewUserInfo newUserInfo= new NewUserInfo("emrebey8@gmail.com", "987654","Emre B",
+                "emre_google","emre_facebook","emre_github");
+        Response response = given().accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .and()
+                .body(newUserInfo)  // Serialization   ==>> java to json
+                .when()
+                .post("/api/users");
+
+        assertEquals(response.statusCode(),200);
+        response.prettyPrint();
+        assertTrue(response.body().asString().contains("token"));
+
+    }
 }
