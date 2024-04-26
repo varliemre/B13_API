@@ -5,6 +5,10 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 
@@ -56,4 +60,56 @@ public class PostRequestDemo {
         response.prettyPrint();
         assertTrue(response.body().asString().contains("token"));
     }
+
+    @Test
+    public void t34_dx_registerUser_POST_newUser2() {
+
+        Map<String,Object> requestMap = new HashMap<>();
+        requestMap.put("email","emrebey6@gmail.com");
+        requestMap.put("password","987654");
+        requestMap.put("name","Emre B");
+        requestMap.put("google","emre_google");
+        requestMap.put("facebook","facebook_emre");
+        requestMap.put("github","github_emre");
+
+        Response response = given().accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .and()
+                .body(requestMap)
+                .when()
+                .post("/api/users");
+
+        assertEquals(response.statusCode(),200);
+        response.prettyPrint();
+        assertTrue(response.body().asString().contains("token"));
+    }
+
+    @Test
+    public void t35_dx_registerUser_POST_newUserInfo_1(){
+
+        NewUserInfo newUserInfo = new NewUserInfo();
+
+        newUserInfo.setEmail("emrebey7@gmail.com");
+        newUserInfo.setPassword("987654");
+        newUserInfo.setName("Emre B");
+        newUserInfo.setGoogle("emre_google");
+        newUserInfo.setFacebook("emre_facebook");
+        newUserInfo.setGoogle("emre_github");
+
+
+        Response response = given().accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .and()
+                .body(newUserInfo)  // Serialization
+                .when()
+                .post("/api/users");
+
+        assertEquals(response.statusCode(),200);
+        response.prettyPrint();
+        assertTrue(response.body().asString().contains("token"));
+
+    }
+
 }
